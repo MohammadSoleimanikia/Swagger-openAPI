@@ -5,10 +5,10 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-  "dev": "node server.js",
-  "build": "node swagger.js",
-  "start": "node server.js"
-},
+    "dev": "node server.js",
+    "build": "node swagger.js",
+    "start": "node server.js"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
