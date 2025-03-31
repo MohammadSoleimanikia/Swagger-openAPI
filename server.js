@@ -83,7 +83,7 @@ const swaggerDocument = {
 };
 
 // Serve Swagger UI
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+app.use('/api', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // Middleware to parse JSON bodies
 app.use(express.json());
