@@ -8,7 +8,7 @@ const doc = {
   },
   servers: [
     {
-      url: 'http://localhost:3000', // Change this to match your API URL
+      url: 'https://swagger-open-api.vercel.app', // Change this to match your API URL
     },
   ],
 };
