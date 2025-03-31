@@ -1,23 +1,98 @@
 import express from 'express';
 import swaggerUi from 'swagger-ui-express';
-import fs from 'fs';
 
 const app = express();
 const port = process.env.PORT || 3000;
-// Load the generated Swagger JSON file
-const swaggerDocument = JSON.parse(fs.readFileSync('./swagger-output.json'));
+
+// Inline Swagger JSON (instead of reading from a file)
+const swaggerDocument = {
+  swagger: "2.0",
+  info: {
+    title: "My API",
+    description: "This is an auto-generated API documentation",
+    version: "1.0.0"
+  },
+  host: "swagger-open-api.vercel.app",
+servers: [
+  {
+    url: "https://swagger-open-api.vercel.app"
+  }
+],
+  basePath: "/",
+  schemes: ["http"],
+  paths: {
+    "/users": {
+      get: {
+        description: "",
+        responses: {
+          "200": { description: "OK" }
+        }
+      },
+      post: {
+        description: "",
+        parameters: [
+          {
+            name: "body",
+            in: "body",
+            schema: {
+              type: "object",
+              properties: {
+                name: { example: "any" }
+              }
+            }
+          }
+        ],
+        responses: {
+          "201": { description: "Created" }
+        }
+      }
+    },
+    "/users/{id}": {
+      get: {
+        description: "",
+        parameters: [
+          { name: "id", in: "path", required: true, type: "string" }
+        ],
+        responses: {
+          "200": { description: "OK" },
+          "404": { description: "Not Found" }
+        }
+      },
+      put: {
+        description: "",
+        parameters: [
+          { name: "id", in: "path", required: true, type: "string" }
+        ],
+        responses: {
+          "200": { description: "OK" },
+          "404": { description: "Not Found" }
+        }
+      },
+      delete: {
+        description: "",
+        parameters: [
+          { name: "id", in: "path", required: true, type: "string" }
+        ],
+        responses: {
+          "200": { description: "OK" },
+          "404": { description: "Not Found" }
+        }
+      }
+    }
+  }
+};
+
+// Serve Swagger UI
+app.use('/', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
+// Middleware to parse JSON bodies
+app.use(express.json());
 
 // Sample user data (in-memory)
 let users = [
   { id: 1, name: 'Mohammad' },
   { id: 2, name: 'Haniyeh' },
 ];
-// Serve Swagger UI
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
-
-// Middleware to parse JSON bodies
-app.use(express.json());
-
 
 app.get('/users', (req, res) => {
   res.json(users);
@@ -62,6 +137,12 @@ app.delete('/users/:id', (req, res) => {
 
   users = users.filter((u) => u.id !== userId);
   res.json({ message: 'User deleted successfully' });
+});
+
+// Start the server
+app.listen(port, () => {
+  console.log(`Server running on http://localhost:${port}`);
+  console.log('Swagger UI is available at http://localhost:3000/api-docs');
 });
 
 export default app;
