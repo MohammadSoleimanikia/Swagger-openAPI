@@ -19,7 +19,7 @@ const swaggerDocument = {
     }
   ],
   basePath: "/",
-  schemes: ["https"], // ✅ Fixed: Changed from "http" to "https"
+  schemes: ["https"],
   paths: {
     "/users": {
       get: {
@@ -83,7 +83,7 @@ const swaggerDocument = {
 };
 
 // Serve Swagger UI
-app.use('/', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // Middleware to parse JSON bodies
 app.use(express.json());
@@ -97,7 +97,9 @@ let users = [
 app.get('/users', (req, res) => {
   res.json(users);
 });
-
+app.get('/',(req,res)=>{
+  res.send('use /api-docs')
+})
 app.get('/users/:id', (req, res) => {
   const userId = parseInt(req.params.id);
   const user = users.find((u) => u.id === userId);
