@@ -13,13 +13,13 @@ const swaggerDocument = {
     version: "1.0.0"
   },
   host: "swagger-open-api.vercel.app",
-servers: [
-  {
-    url: "https://swagger-open-api.vercel.app"
-  }
-],
+  servers: [
+    {
+      url: "https://swagger-open-api.vercel.app"
+    }
+  ],
   basePath: "/",
-  schemes: ["http"],
+  schemes: ["https"], // ✅ Fixed: Changed from "http" to "https"
   paths: {
     "/users": {
       get: {
@@ -141,8 +141,7 @@ app.delete('/users/:id', (req, res) => {
 
 // Start the server
 app.listen(port, () => {
-  console.log(`Server running on http://localhost:${port}`);
-  console.log('Swagger UI is available at http://localhost:3000/api-docs');
+  console.log(`Server running on Vercel at: https://swagger-open-api.vercel.app/`);
 });
 
 export default app;
